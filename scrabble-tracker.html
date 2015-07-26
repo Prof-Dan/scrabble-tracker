@@ -1,0 +1,41 @@
+<head>
+  <title>scrabble-tracker</title>
+</head>
+
+<body>
+  <h1>Scrabble Tracker!</h1>
+
+  <!-- {{> hello}} -->
+
+  <form class='col-md-6' id='scrabbleForm'>
+    <div class='form-group'>
+      <label for='wordBox'>Scrabble Word:</label>
+      <input type='text' id='wordBox' placeholder='Word...' class='form-control'>
+    </div>
+    <div class='form-group'>
+      <label for='doubleLetterScore'>Double Letter Score</label>
+      <input type="checkbox" id='doubleLetter'>
+      <input type="text" placeholder='Letters:' class='form-control' id='doubleLetters' readonly>
+    </div>
+    <div class='form-group'>
+      <label for='tripleLetterScore'>Triple Letter Score</label>
+      <input type="checkbox" id='tripleLetter'>
+      <input type="text" placeholder='Letters:' class='form-control' id='tripleLetters' readonly>
+    </div>
+    <div class='form-group'>
+      <label for='doubleWord'>Double Word Score</label>
+      <input type='checkbox' id='doubleWord'>
+    </div>
+    <div class='form-group'>
+      <label for='tripleWord'>Triple Word Score</label>
+      <input type='checkbox' id='tripleWord'>
+    </div>
+    <button type="submit" class="btn btn-default" id='submitForm'>Submit</button>
+  </form>
+
+</body>
+
+<!-- <template name="hello">
+  <button>Click Me</button>
+  <p>You've pressed the button {{counter}} times.</p>
+</template> -->
