@@ -29,26 +29,104 @@ var letterValues = {
 
 };
 
+scoreCollection = new Mongo.Collection('score');
+
+var name;
+
 if (Meteor.isClient) {
+
+  name = prompt('What is your name?')
+
+  Template.body.helpers({
+
+    users: function() {
+
+      return scoreCollection.find({}, {sort:{score:-1}})
+
+    }
+
+  });
+
+  Template.body.events({
+
+    'submit #scrabbleForm': function() {
+
+      event.preventDefault();
+
+      scoreCollection.update(name, {$inc:{score: getScore()}});
+
+    }
+
+  });
+
+  scoreCollection.insert({_id:name, name:name, score:0});
+
   // counter starts at 0
-  Session.setDefault('counter', 0);
+  //Session.setDefault('counter', 0);
 
-  Template.hello.helpers({
-    counter: function () {
-      return Session.get('counter');
-    }
-  });
+  // Template.hello.helpers({
+  //   counter: function () {
+  //     return Session.get('counter');
+  //   }
+  // });
 
-  Template.hello.events({
-    'click button': function () {
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
-    }
-  });
+  // Template.hello.events({
+  //   'click button': function () {
+  //     // increment the counter when button is clicked
+  //     Session.set('counter', Session.get('counter') + 1);
+  //   }
+  // });
 }
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
-    // code to run on server at startup
+    scoreCollection.remove({});
   });
+}
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function getScore() {
+
+  var word = document.getElementById('wordBox').value.toLowerCase();
+  var wordScore = 0;
+  for(var i=0;i<word.length;i++) {
+
+    wordScore += letterValues[word[i]];
+
+  }
+
+  var doubles = document.getElementById('doubleLetters').value.toLowerCase();
+  for(var j=0;j<doubles.length;j++) {
+
+    wordScore += letterValues[doubles[j]];
+
+  }
+
+  var triples = document.getElementById('tripleLetters').value.toLowerCase();
+  for(var k=0;k<triples.length;k++) {
+
+    wordScore += (letterValues[triples[j]]*2);
+
+  }
+
+  if(document.getElementById('doubleWord').checked) {
+
+    wordScore *= 2;
+
+  }
+
+  if(document.getElementById('tripleWord').checked) {
+
+    wordScore *= 3;
+
+  }
+
+  return wordScore;
+
 }
