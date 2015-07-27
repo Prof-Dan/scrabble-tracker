@@ -7,5 +7,6 @@ Totally not inspired by [tableflip/scrabble-score-keeper](https://github.com/tab
 #Running
 
 Just run
+
     meteor
 in the root directory
